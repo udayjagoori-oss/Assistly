@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assistly</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #000000, #111111, #000000);
+      color: white;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-top: 50px;
+    }
+
+    p {
+      color: #bbb;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 10px auto;
+    }
+
+    .btn {
+      background-color: #00ff7f;
+      color: black;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      margin: 10px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #00ff7f;
+      border: 2px solid #00ff7f;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: #111;
+      padding: 20px;
+      border-radius: 20px;
+      min-width: 250px;
+      flex: 1;
+      max-width: 300px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .check {
+      color: #00ff7f;
+      font-weight: bold;
+      font-size: 1.5em;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      border-top: 1px solid #333;
+      color: #888;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <div class="container">
+    <h1>Assistly</h1>
+    <p>AI-powered customer support for growing businesses</p>
+    <p>Turn missed inquiries into customers. Assistly is your 24/7 AI receptionist that replies instantly, captures leads, and helps you close more sales.</p>
+    <div>
+      <button class="btn">Join Beta</button>
+      <button class="btn btn-outline">Request Demo</button>
+    </div>
+    <p style="font-size: 0.9em; color: #666;">Beta access is limited • Early users get lifetime discounts</p>
+  </div>
+
+  <!-- Problem Section -->
+  <div class="container">
+    <h2>The Problem</h2>
+    <p>Small businesses lose customers every day because they can’t respond instantly. Missed calls, late replies, and overworked staff mean lost revenue.</p>
+  </div>
+
+  <!-- Solution Section -->
+  <div class="container" style="background: rgba(17,17,17,0.7); border-radius: 20px; padding: 50px 20px;">
+    <h2>The Assistly Solution</h2>
+    <div class="cards">
+      <div class="card"><span class="check">&#10003;</span> Instant replies 24/7</div>
+      <div class="card"><span class="check">&#10003;</span> Captures leads automatically</div>
+      <div class="card"><span class="check">&#10003;</span> Trained on your business info</div>
+    </div>
+  </div>
+
+  <!-- Beta Section -->
+  <div class="container">
+    <h2>Assistly Beta</h2>
+    <p>We’re launching Assistly in private beta for a small group of businesses. Help shape the product and get exclusive early pricing.</p>
+    <div>
+      <button class="btn">Apply for Beta Access</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © <span id="year"></span> Assistly. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
