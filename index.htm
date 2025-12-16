@@ -1,145 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Assistly</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #000000, #111111, #000000);
-      color: white;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assistly - AI Chatbot Assistant</title>
+<style>
+  /* ===== Reset & Global ===== */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #0f0f0f, #1c1c1c);
+    color: #fff;
+    scroll-behavior: smooth;
+  }
+  a { text-decoration: none; }
+  .container { max-width: 1200px; margin: auto; padding: 60px 20px; text-align: center; }
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 50px 20px;
-      text-align: center;
-    }
+  /* ===== Buttons ===== */
+  .btn {
+    background-color: #00ff7f;
+    color: black;
+    border: none;
+    padding: 18px 40px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 10px;
+    transition: transform 0.2s, background 0.3s;
+  }
+  .btn:hover { transform: scale(1.05); background: #00e670; }
+  .btn-outline {
+    background: transparent;
+    color: #00ff7f;
+    border: 2px solid #00ff7f;
+  }
 
-    h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
+  /* ===== Sections ===== */
+  section { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; padding: 80px 20px; }
+  section.show { opacity: 1; transform: translateY(0); }
 
-    h2 {
-      font-size: 2em;
-      margin-top: 50px;
-    }
+  /* ===== Hero Section ===== */
+  #hero h1 { font-size: 3.5em; margin-bottom: 20px; color: #00ff7f; }
+  #hero p { font-size: 1.2em; color: #bbb; margin-bottom: 30px; }
 
-    p {
-      color: #bbb;
-      line-height: 1.6;
-      max-width: 800px;
-      margin: 10px auto;
-    }
+  /* ===== Description Section ===== */
+  #description h2 { font-size: 2.5em; color: #00ff7f; margin-bottom: 20px; }
+  #description p { font-size: 1.1em; color: #ccc; }
+  #description ul { list-style: none; color: #bbb; margin-top: 20px; line-height: 1.8; }
 
-    .btn {
-      background-color: #00ff7f;
-      color: black;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1rem;
-      margin: 10px;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
+  /* ===== Features Section ===== */
+  #features h2 { font-size: 2.5em; color: #00ff7f; margin-bottom: 40px; }
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+  }
+  .card {
+    background: #111;
+    border-radius: 20px;
+    padding: 25px;
+    min-width: 250px;
+    flex:1;
+    max-width: 320px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease;
+  }
+  .card.show { opacity:1; transform: translateY(0); }
+  .card:hover { transform: scale(1.03); }
+  .check { color: #00ff7f; font-size:1.5em; font-weight:bold; }
 
-    .btn:hover {
-      transform: scale(1.05);
-    }
+  /* ===== Footer ===== */
+  footer {
+    padding: 30px 20px;
+    border-top: 1px solid #333;
+    color: #888;
+    text-align:center;
+  }
 
-    .btn-outline {
-      background: transparent;
-      color: #00ff7f;
-      border: 2px solid #00ff7f;
-    }
-
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .card {
-      background: #111;
-      padding: 20px;
-      border-radius: 20px;
-      min-width: 250px;
-      flex: 1;
-      max-width: 300px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .check {
-      color: #00ff7f;
-      font-weight: bold;
-      font-size: 1.5em;
-    }
-
-    footer {
-      margin-top: 50px;
-      padding: 20px;
-      border-top: 1px solid #333;
-      color: #888;
-    }
-
-  </style>
+  /* ===== Responsive ===== */
+  @media(max-width:768px) {
+    #hero h1 { font-size: 2.5em; }
+    .cards { flex-direction: column; align-items: center; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- Hero Section -->
-  <div class="container">
-    <h1>Assistly</h1>
-    <p>AI-powered customer support for growing businesses</p>
-    <p>Turn missed inquiries into customers. Assistly is your 24/7 AI receptionist that replies instantly, captures leads, and helps you close more sales.</p>
-    <div>
-      <button class="btn">Join Beta</button>
-      <button class="btn btn-outline">Request Demo</button>
-    </div>
-    <p style="font-size: 0.9em; color: #666;">Beta access is limited • Early users get lifetime discounts</p>
+<!-- Hero Section -->
+<section id="hero" class="container">
+  <h1>Assistly</h1>
+  <p>Your AI-powered chatbot assistant for businesses — fast, reliable, 24/7.</p>
+  <div>
+    <a href="https://your-ai-chat-link.com" target="_blank"><button class="btn">Start Chatting</button></a>
+    <a href="https://forms.gle/your-demo-form-link" target="_blank"><button class="btn btn-outline">Request Demo</button></a>
   </div>
+</section>
 
-  <!-- Problem Section -->
-  <div class="container">
-    <h2>The Problem</h2>
-    <p>Small businesses lose customers every day because they can’t respond instantly. Missed calls, late replies, and overworked staff mean lost revenue.</p>
+<!-- Description Section -->
+<section id="description" class="container">
+  <h2>About Assistly</h2>
+  <p>Assistly is an AI-powered chatbot assistant designed to help businesses respond to customers instantly, capture leads automatically, and provide personalized support 24/7.</p>
+  <ul>
+    <li>✅ Instant replies to every customer message</li>
+    <li>✅ Automatic lead capture and follow-up</li>
+    <li>✅ Personalized responses tailored to your business</li>
+    <li>✅ Easy integration with websites and messaging platforms</li>
+    <li>✅ Saves time and increases customer satisfaction</li>
+  </ul>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="container">
+  <h2>Key Features</h2>
+  <div class="cards">
+    <div class="card"><span class="check">&#10003;</span> 24/7 Instant Replies</div>
+    <div class="card"><span class="check">&#10003;</span> Captures Leads Automatically</div>
+    <div class="card"><span class="check">&#10003;</span> Personalized Responses</div>
   </div>
+</section>
 
-  <!-- Solution Section -->
-  <div class="container" style="background: rgba(17,17,17,0.7); border-radius: 20px; padding: 50px 20px;">
-    <h2>The Assistly Solution</h2>
-    <div class="cards">
-      <div class="card"><span class="check">&#10003;</span> Instant replies 24/7</div>
-      <div class="card"><span class="check">&#10003;</span> Captures leads automatically</div>
-      <div class="card"><span class="check">&#10003;</span> Trained on your business info</div>
-    </div>
-  </div>
+<!-- Beta Section -->
+<section id="beta" class="container">
+  <h2>Join Our Beta</h2>
+  <p>Be among the first to try Assistly and help shape the future of AI-powered customer support.</p>
+  <a href="https://forms.gle/your-beta-signup-form" target="_blank"><button class="btn">Apply for Beta Access</button></a>
+</section>
 
-  <!-- Beta Section -->
-  <div class="container">
-    <h2>Assistly Beta</h2>
-    <p>We’re launching Assistly in private beta for a small group of businesses. Help shape the product and get exclusive early pricing.</p>
-    <div>
-      <button class="btn">Apply for Beta Access</button>
-    </div>
-  </div>
+<!-- Footer -->
+<footer>
+  © <span id="year"></span> Assistly. All rights reserved.
+</footer>
 
-  <!-- Footer -->
-  <footer>
-    © <span id="year"></span> Assistly. All rights reserved.
-  </footer>
+<!-- JS for Animations and Year -->
+<script>
+  // Animate sections on scroll
+  const sections = document.querySelectorAll('section');
+  const cards = document.querySelectorAll('.card');
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  function animateOnScroll() {
+    const trigger = window.innerHeight - 100;
+    sections.forEach(sec => { if(sec.getBoundingClientRect().top < trigger) sec.classList.add('show'); });
+    cards.forEach((card,i) => { if(card.getBoundingClientRect().top < trigger) setTimeout(()=>card.classList.add('show'), i*200); });
+  }
+
+  window.addEventListener('scroll', animateOnScroll);
+  window.addEventListener('load', animateOnScroll);
+
+  // Set footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
+
