@@ -4,131 +4,118 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Assistly - AI Chatbot Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   /* ===== Reset & Global ===== */
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to bottom, #0f0f0f, #1c1c1c);
-    color: #fff;
-    scroll-behavior: smooth;
-  }
-  a { text-decoration: none; }
-  .container { max-width: 1200px; margin: auto; padding: 60px 20px; text-align: center; }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
+  body { background:#0f0f0f; color:#fff; scroll-behavior:smooth; }
+  a { text-decoration:none; color:inherit; }
+  img { max-width:100%; border-radius:15px; }
 
   /* ===== Buttons ===== */
-  .btn {
-    background-color: #00ff7f;
-    color: black;
-    border: none;
-    padding: 18px 40px;
-    font-size: 1.1rem;
-    border-radius: 30px;
-    cursor: pointer;
-    margin: 10px;
-    transition: transform 0.2s, background 0.3s;
-  }
-  .btn:hover { transform: scale(1.05); background: #00e670; }
-  .btn-outline {
-    background: transparent;
-    color: #00ff7f;
-    border: 2px solid #00ff7f;
-  }
+  .btn { background-color:#00ff7f; color:black; border:none; padding:15px 35px; font-size:1rem; border-radius:30px; cursor:pointer; transition:0.3s; }
+  .btn:hover { background:#00e670; transform:scale(1.05); }
+  .btn-outline { background:transparent; border:2px solid #00ff7f; color:#00ff7f; }
 
-  /* ===== Sections ===== */
-  section { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; padding: 80px 20px; }
-  section.show { opacity: 1; transform: translateY(0); }
+  /* ===== Containers ===== */
+  .container { max-width:1200px; margin:auto; padding:60px 20px; text-align:center; }
+  .section { opacity:0; transform:translateY(50px); transition:all 0.8s ease; padding:80px 0; }
+  .section.show { opacity:1; transform:translateY(0); }
 
-  /* ===== Hero Section ===== */
-  #hero h1 { font-size: 3.5em; margin-bottom: 20px; color: #00ff7f; }
-  #hero p { font-size: 1.2em; color: #bbb; margin-bottom: 30px; }
+  h1,h2,h3 { margin-bottom:20px; }
+  h1 { font-size:3em; color:#00ff7f; }
+  h2 { font-size:2.5em; color:#00ff7f; }
+  h3 { font-size:1.5em; color:#fff; }
 
-  /* ===== Description Section ===== */
-  #description h2 { font-size: 2.5em; color: #00ff7f; margin-bottom: 20px; }
-  #description p { font-size: 1.1em; color: #ccc; }
-  #description ul { list-style: none; color: #bbb; margin-top: 20px; line-height: 1.8; }
+  p { color:#ccc; margin-bottom:20px; line-height:1.6; }
 
-  /* ===== Features Section ===== */
-  #features h2 { font-size: 2.5em; color: #00ff7f; margin-bottom: 40px; }
-  .cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-  }
-  .card {
-    background: #111;
-    border-radius: 20px;
-    padding: 25px;
-    min-width: 250px;
-    flex:1;
-    max-width: 320px;
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.6s ease;
-  }
-  .card.show { opacity:1; transform: translateY(0); }
-  .card:hover { transform: scale(1.03); }
-  .check { color: #00ff7f; font-size:1.5em; font-weight:bold; }
+  /* ===== Hero ===== */
+  #hero { background: linear-gradient(135deg, #0f0f0f, #1c1c1c); }
+  #hero .hero-content { max-width:800px; margin:auto; }
+
+  /* ===== Features ===== */
+  .features { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; margin-top:40px; }
+  .feature-card { background:#111; padding:30px; border-radius:20px; flex:1 1 250px; min-width:250px; transition:0.3s; }
+  .feature-card:hover { transform:scale(1.03); }
+  .feature-icon { font-size:2em; margin-bottom:15px; color:#00ff7f; }
+
+  /* ===== How it works ===== */
+  .how-cards { display:flex; flex-wrap:wrap; gap:40px; justify-content:center; margin-top:40px; }
+  .how-card { background:#111; border-radius:20px; padding:25px; flex:1 1 250px; min-width:250px; transition:0.3s; }
+  .how-card:hover { transform:scale(1.03); }
+
+  /* ===== Pricing ===== */
+  .pricing { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; margin-top:40px; }
+  .price-card { background:#111; padding:30px; border-radius:20px; flex:1 1 250px; min-width:250px; transition:0.3s; }
+  .price-card:hover { transform:scale(1.03); }
+
+  /* ===== Testimonials ===== */
+  .testimonials { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; margin-top:40px; }
+  .test-card { background:#111; padding:30px; border-radius:20px; flex:1 1 250px; min-width:250px; transition:0.3s; }
+  .test-card:hover { transform:scale(1.03); }
 
   /* ===== Footer ===== */
-  footer {
-    padding: 30px 20px;
-    border-top: 1px solid #333;
-    color: #888;
-    text-align:center;
-  }
+  footer { background:#111; padding:40px 20px; text-align:center; border-top:1px solid #333; color:#888; }
 
   /* ===== Responsive ===== */
-  @media(max-width:768px) {
-    #hero h1 { font-size: 2.5em; }
-    .cards { flex-direction: column; align-items: center; }
+  @media(max-width:768px){
+    h1 { font-size:2.2em; }
+    h2 { font-size:2em; }
+    .features, .how-cards, .pricing, .testimonials { flex-direction:column; }
   }
 </style>
 </head>
 <body>
 
 <!-- Hero Section -->
-<section id="hero" class="container">
-  <h1>Assistly</h1>
-  <p>Your AI-powered chatbot assistant for businesses — fast, reliable, 24/7.</p>
-  <div>
-    <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank">
-      <button class="btn">Start Chatting</button>
-    </a>
-    <a href="https://forms.gle/your-demo-form-link" target="_blank">
-      <button class="btn btn-outline">Request Demo</button>
-    </a>
+<section id="hero" class="section">
+  <div class="container hero-content">
+    <h1>Assistly</h1>
+    <p>Your AI-powered chatbot assistant for businesses — fast, reliable, and available 24/7 to help you capture leads and improve customer support.</p>
+    <div>
+      <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank"><button class="btn">Start Chatting</button></a>
+      <a href="https://forms.gle/your-demo-form-link" target="_blank"><button class="btn btn-outline">Request Demo</button></a>
+    </div>
   </div>
-  <p class="text-sm" style="color:#888;">Beta access is limited • Early users get lifetime discounts</p>
-</section>
-
-<!-- Description Section -->
-<section id="description" class="container">
-  <h2>About Assistly</h2>
-  <p>Assistly is an AI-powered chatbot assistant designed to help businesses provide instant, 24/7 customer support, capture leads automatically, and deliver personalized responses based on each business’s specific information. Its key features include instant replies to every customer inquiry, automatic lead capture and follow-up, personalized responses tailored to the business, and easy integration with websites, messaging platforms, and applications. The chatbot is user-friendly, quick to set up, and suitable for small and medium-sized businesses looking to enhance their customer support without hiring additional staff. Assistly’s pricing is simple and affordable, with a flat rate of 1000 INR per month. Beta users can gain early access and receive exclusive discounts. Overall, Assistly is designed to provide businesses with a professional, reliable, and intelligent assistant that improves communication, saves time, and helps turn inquiries into loyal customers.</p>
 </section>
 
 <!-- Features Section -->
-<section id="features" class="container">
+<section id="features" class="section container">
   <h2>Key Features</h2>
-  <div class="cards">
-    <div class="card"><span class="check">&#10003;</span> 24/7 Instant Replies</div>
-    <div class="card"><span class="check">&#10003;</span> Captures Leads Automatically</div>
-    <div class="card"><span class="check">&#10003;</span> Personalized Responses</div>
+  <div class="features">
+    <div class="feature-card"><div class="feature-icon">&#128222;</div><h3>24/7 Instant Replies</h3><p>Respond to your customers instantly without missing any inquiry.</p></div>
+    <div class="feature-card"><div class="feature-icon">&#128176;</div><h3>Automatic Lead Capture</h3><p>Collect leads automatically and follow up efficiently.</p></div>
+    <div class="feature-card"><div class="feature-icon">&#128172;</div><h3>Personalized Responses</h3><p>Answers are tailored to your business and your customers.</p></div>
+    <div class="feature-card"><div class="feature-icon">&#128640;</div><h3>Easy Integration</h3><p>Works seamlessly on websites, apps, and messaging platforms.</p></div>
   </div>
 </section>
 
-<!-- Beta Section -->
-<section id="beta" class="container">
-  <h2>Join Our Beta</h2>
-  <p>Be among the first to try Assistly and help shape the future of AI-powered customer support.</p>
-  <a href="https://forms.gle/your-beta-signup-form" target="_blank">
-    <button class="btn">Apply for Beta Access</button>
-  </a>
+<!-- How it Works Section -->
+<section id="how" class="section container">
+  <h2>How Assistly Works</h2>
+  <div class="how-cards">
+    <div class="how-card"><h3>Step 1</h3><p>Sign up and add your business information to Assistly.</p></div>
+    <div class="how-card"><h3>Step 2</h3><p>Integrate the chatbot on your website or messaging platform.</p></div>
+    <div class="how-card"><h3>Step 3</h3><p>Assistly automatically responds to customer inquiries 24/7 and captures leads.</p></div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="section container">
+  <h2>Pricing</h2>
+  <div class="pricing">
+    <div class="price-card"><h3>Basic</h3><p>1000 INR per month</p></div>
+    <div class="price-card"><h3>Pro</h3><p>Contact us for custom pricing</p></div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="section container">
+  <h2>What Our Users Say</h2>
+  <div class="testimonials">
+    <div class="test-card"><p>"Assistly has transformed our customer support. Instant replies and automatic lead capture save us hours!"</p><h3>- Demo Company</h3></div>
+    <div class="test-card"><p>"The AI responses are accurate and personalized. Our customers love it!"</p><h3>- Beta User</h3></div>
+  </div>
 </section>
 
 <!-- Footer -->
@@ -136,26 +123,21 @@
   © <span id="year"></span> Assistly. All rights reserved.
 </footer>
 
-<!-- JS for Animations and Year -->
+<!-- JS for animations and year -->
 <script>
-  // Animate sections on scroll
-  const sections = document.querySelectorAll('section');
-  const cards = document.querySelectorAll('.card');
-
-  function animateOnScroll() {
+  const sections = document.querySelectorAll('.section');
+  function animateScroll(){ 
     const trigger = window.innerHeight - 100;
     sections.forEach(sec => { if(sec.getBoundingClientRect().top < trigger) sec.classList.add('show'); });
-    cards.forEach((card,i) => { if(card.getBoundingClientRect().top < trigger) setTimeout(()=>card.classList.add('show'), i*200); });
   }
+  window.addEventListener('scroll', animateScroll);
+  window.addEventListener('load', animateScroll);
 
-  window.addEventListener('scroll', animateOnScroll);
-  window.addEventListener('load', animateOnScroll);
-
-  // Set footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 </body>
 </html>
+
 
 
