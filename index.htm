@@ -1,182 +1,432 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assistly – AI Chatbot Assistant</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Assistly — AI Receptionist for Businesses</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#0f0f0f;color:#fff;scroll-behavior:smooth}
-a{text-decoration:none;color:inherit}
+  /* ===== Reset & globals ===== */
+  :root{
+    --bg:#0f0f0f; --card:#111; --muted:#bfbfbf; --accent:#00ff7f; --glass:rgba(255,255,255,0.03);
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+  html,body{height:100%}
+  body{background:linear-gradient(180deg,#0f0f0f 0%, #141414 100%); color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:var(--max);margin:0 auto;padding:28px}
+  .section{padding:36px 0}
+  h1,h2,h3{margin-bottom:12px}
+  h1{font-size:2.4rem;color:var(--accent)}
+  h2{font-size:1.6rem;color:var(--accent)}
+  p{color:var(--muted)}
+  button{font-weight:600}
 
-.container{max-width:1200px;margin:auto;padding:80px 20px;text-align:center}
-.section{opacity:0;transform:translateY(50px);transition:all .8s ease}
-.section.show{opacity:1;transform:translateY(0)}
+  /* ===== header ===== */
+  header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo-mark{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#00e670);display:flex;align-items:center;justify-content:center;color:#000;font-weight:700;font-size:18px;box-shadow:0 6px 20px rgba(0,255,127,0.06)}
+  .brand strong{font-size:1.05rem;letter-spacing:0.2px}
+  nav{display:flex;gap:12px;align-items:center}
+  nav a{color:var(--muted);padding:8px 12px;border-radius:10px}
+  nav a:hover{color:var(--accent);background:var(--glass)}
 
-h1{font-size:3rem;color:#00ff7f}
-h2{font-size:2.3rem;color:#00ff7f;margin-bottom:20px}
-h3{margin-bottom:10px}
-p{color:#ccc;line-height:1.6;margin-bottom:20px}
+  /* ===== hero ===== */
+  .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);box-shadow:0 6px 30px rgba(0,0,0,0.5)}
+  .hero h1{font-size:2.6rem;margin-bottom:8px}
+  .hero p{font-size:1.02rem;color:#d0d0d0}
+  .hero-ctas{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{background:var(--accent);color:#000;border:none;padding:12px 22px;border-radius:999px;cursor:pointer;box-shadow:0 8px 20px rgba(0,255,127,0.08)}
+  .btn-outline{background:transparent;border:2px solid var(--accent);color:var(--accent);padding:10px 20px;border-radius:999px}
+  .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:20px;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
+  .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .badge{background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:999px;color:var(--muted);font-size:0.9rem}
 
-.btn{background:#00ff7f;color:#000;border:none;padding:14px 34px;border-radius:30px;font-weight:600;cursor:pointer;transition:.3s}
-.btn:hover{transform:scale(1.05)}
-.btn-outline{background:transparent;border:2px solid #00ff7f;color:#00ff7f}
+  /* ===== trust / stats strip ===== */
+  .trust-strip{display:flex;gap:18px;justify-content:space-between;align-items:center;padding:12px;margin-top:20px;background:rgba(255,255,255,0.01);border-radius:12px}
+  .trust-left{display:flex;gap:14px;align-items:center}
+  .stat{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 12px}
+  .stat strong{color:var(--accent);font-size:1.2rem}
+  .small{font-size:0.9rem;color:var(--muted)}
 
-#hero{background:linear-gradient(135deg,#0f0f0f,#1b1b1b)}
+  /* ===== features grid ===== */
+  .features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px}
+  .feature{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.4);transition:transform .22s,box-shadow .22s}
+  .feature:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+  .feature .icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg, rgba(0,255,127,0.12), rgba(0,255,127,0.05));display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:20px;margin-bottom:10px}
 
-.tabs{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-bottom:40px}
-.tab-btn{
-  background:#111;border:2px solid #333;color:#ccc;
-  padding:12px 26px;border-radius:30px;cursor:pointer;
-  transition:.3s;display:flex;gap:8px;align-items:center
-}
-.tab-btn.active,.tab-btn:hover{background:#00ff7f;color:#000;border-color:#00ff7f}
+  /* ===== use cases ===== */
+  .usecases{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+  .usecase{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:18px;border-radius:12px}
+  .usecase h4{color:var(--accent);margin-bottom:8px}
 
-.tab-content{display:none;max-width:900px;margin:auto}
-.tab-content.active{display:block;animation:fade .5s ease}
+  /* ===== tabs area (dense) ===== */
+  .tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+  .tab-btn{background:var(--card);border:2px solid rgba(255,255,255,0.02);padding:10px 14px;border-radius:10px;display:flex;gap:8px;align-items:center;color:var(--muted);cursor:pointer}
+  .tab-btn.active{background:var(--accent);color:#000;border-color:var(--accent);box-shadow:0 8px 30px rgba(0,255,127,0.06)}
+  .tab-content{padding:16px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;margin-top:12px}
+  .pricing-cards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+  .price-card{background:var(--card);padding:18px;border-radius:12px;min-width:220px;box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+  .price-card .price{font-size:1.6rem;color:var(--accent);font-weight:700}
 
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+  /* ===== FAQ list compact ===== */
+  .faq{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  .faq-item{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
 
-.pricing{display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
-.price-card{
-  background:#111;padding:30px;border-radius:20px;
-  min-width:260px;transition:.3s
-}
-.price-card:hover{transform:scale(1.04)}
+  /* ===== testimonials (small slider) ===== */
+  .testimonials{display:flex;gap:12px;overflow:hidden;margin-top:20px}
+  .test{min-width:280px;background:var(--card);padding:16px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+  .test p{color:#ddd;font-size:0.96rem}
 
-footer{background:#111;border-top:1px solid #333;padding:40px;color:#777}
+  /* ===== CTA banner ===== */
+  .cta-banner{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:18px;background:linear-gradient(90deg, rgba(0,255,127,0.04), rgba(0,255,127,0.01));border-radius:12px;margin-top:24px}
+  .cta-left h3{margin-bottom:6px}
+  .cta-right{display:flex;gap:10px;align-items:center}
 
-@media(max-width:768px){
-h1{font-size:2.2rem}
-.pricing{flex-direction:column}
-}
+  /* ===== contact & footer ===== */
+  .contact{padding:18px;background:rgba(255,255,255,0.02);border-radius:12px;margin-top:18px;text-align:center}
+  footer{margin-top:26px;padding:22px;text-align:center;color:#9a9a9a;border-top:1px solid rgba(255,255,255,0.03)}
+
+  /* ===== responsive tweaks ===== */
+  @media(max-width:960px){
+    .hero{grid-template-columns:1fr; text-align:left}
+    .features-grid{grid-template-columns:repeat(2,1fr)}
+    .usecases{grid-template-columns:1fr}
+    .faq{grid-template-columns:1fr}
+    .trust-strip{flex-direction:column;gap:8px;align-items:flex-start}
+  }
+  @media(max-width:520px){
+    .features-grid{grid-template-columns:1fr}
+    .hero h1{font-size:2rem}
+    .cta-banner{flex-direction:column;align-items:flex-start}
+    .testimonials{overflow-x:auto}
+  }
+
+  /* small utility */
+  .muted{color:var(--muted);font-size:0.95rem}
+  .center{display:flex;justify-content:center;align-items:center}
 </style>
 </head>
-
 <body>
 
-<!-- HERO -->
-<section id="hero" class="section">
-  <div class="container">
-    <h1>Assistly</h1>
-    <p>AI-powered chatbot assistant helping businesses respond instantly, capture leads, and stay available 24/7.</p>
-    <br>
-    <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank">
-      <button class="btn">Start Chatting</button>
-    </a>
-    <a href="https://forms.gle/b6D9ptVWwRB6sjLx5" target="_blank">
-      <button class="btn btn-outline">Request Demo</button>
-    </a>
-  </div>
-</section>
+<div class="container">
+  <header>
+    <div class="brand">
+      <div class="logo-mark">A</div>
+      <div><strong>Assistly</strong><div class="muted" style="font-size:0.85rem">AI Receptionist • Beta</div></div>
+    </div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+      <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank" class="btn" style="padding:8px 16px;font-size:0.95rem">Start Chatting</a>
+    </nav>
+  </header>
 
-<!-- TABS -->
-<section class="section container">
+  <!-- HERO -->
+  <section id="hero" class="hero section" style="margin-top:6px">
+    <div>
+      <h1>AI receptionist that converts visitors into customers</h1>
+      <p>Assistly (AVA) answers questions instantly, captures leads automatically and helps businesses improve conversion — without extra staff.</p>
 
-<h2>Explore Assistly</h2>
+      <div class="hero-ctas">
+        <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank"><button class="btn">Start Chatting</button></a>
+        <a href="https://forms.gle/b6D9ptVWwRB6sjLx5" target="_blank"><button class="btn-outline">Request Demo</button></a>
+      </div>
 
-<div class="tabs">
-  <button class="tab-btn active" onclick="openTab(event,'overview')">⚡ Overview</button>
-  <button class="tab-btn" onclick="openTab(event,'features')">✨ Features</button>
-  <button class="tab-btn" onclick="openTab(event,'pricing')">💰 Pricing</button>
-  <button class="tab-btn" onclick="openTab(event,'chatbot')">🤖 Chatbot</button>
-</div>
+      <div class="badge-row">
+        <div class="badge">Beta access • Limited</div>
+        <div class="badge">₹999/month</div>
+        <div class="badge">Works on websites & messaging</div>
+      </div>
 
-<!-- OVERVIEW -->
-<div id="overview" class="tab-content active">
-  <p>
-    Assistly is an AI receptionist designed for modern businesses. It replies instantly,
-    captures leads automatically, and answers customer questions using business-specific information.
-  </p>
-</div>
-
-<!-- FEATURES -->
-<div id="features" class="tab-content">
-  <p>
-    ✔ 24/7 instant replies<br>
-    ✔ Lead capture automation<br>
-    ✔ Business-trained AI (AVA)<br>
-    ✔ Easy website & WhatsApp integration<br>
-    ✔ No technical setup required
-  </p>
-</div>
-
-<!-- PRICING INSIDE TAB -->
-<div id="pricing" class="tab-content">
-  <div class="pricing">
-
-    <div class="price-card">
-      <h3>Monthly</h3>
-      <p style="font-size:2rem;color:#00ff7f">₹999</p>
-      <p>per month</p>
-      <br>
-      <a href="https://forms.gle/b6D9ptVWwRB6sjLx5" target="_blank">
-        <button class="btn">Request Demo</button>
-      </a>
+      <!-- trust / stats -->
+      <div class="trust-strip" style="margin-top:18px;">
+        <div class="trust-left">
+          <div class="stat">
+            <strong>24/7</strong><div class="small">Availability</div>
+          </div>
+          <div class="stat">
+            <strong>Auto</strong><div class="small">Lead Capture</div>
+          </div>
+          <div class="stat">
+            <strong>Founder</strong><div class="small">Uday Jagoori</div>
+          </div>
+        </div>
+        <div class="small">Personal onboarding for beta users • Email: <a href="mailto:assistlyyy@gmail.com" style="color:var(--accent)">assistlyyy@gmail.com</a></div>
+      </div>
     </div>
 
-    <div class="price-card" style="border:2px solid #00ff7f">
-      <h3>Yearly ⭐</h3>
-      <p style="font-size:2rem;color:#00ff7f">₹9,999</p>
-      <p>Save ₹2,000</p>
-      <br>
-      <a href="https://forms.gle/b6D9ptVWwRB6sjLx5" target="_blank">
-        <button class="btn">Request Demo</button>
-      </a>
+    <div class="hero-card">
+      <!-- condensed feature list / micro demo UI -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="background:#0b0b0b;padding:12px;border-radius:10px">
+          <div style="font-size:0.95rem;color:var(--muted)">Live demo</div>
+          <div style="margin-top:8px;font-weight:600">Ask AVA: “What services do you offer?”</div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <div style="flex:1;background:#080808;padding:12px;border-radius:10px;text-align:left">
+            <div style="font-size:0.9rem;color:var(--muted)">User</div>
+            <div style="margin-top:6px">Do you take bookings?</div>
+          </div>
+          <div style="flex:1;background:#071; padding:12px;border-radius:10px;text-align:left">
+            <div style="font-size:0.9rem;color:#001">AVA</div>
+            <div style="margin-top:6px;color:#001">Yes — Assistly can collect booking info and forward it to you.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:8px" class="center">
+          <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank" class="btn" style="padding:8px 14px">Open Live Chat</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES GRID -->
+  <section id="features" class="section">
+    <h2>Key features</h2>
+    <div class="features-grid" aria-hidden="false">
+      <div class="feature">
+        <div class="icon">💬</div>
+        <h3>Instant Replies</h3>
+        <p class="muted">Respond to customer messages immediately — reduce missed opportunities.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🧲</div>
+        <h3>Lead Capture</h3>
+        <p class="muted">Automatically capture contact info and export for follow-up.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⚙️</div>
+        <h3>Business Trained</h3>
+        <p class="muted">AVA is trained on your own business info for relevant answers.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔌</div>
+        <h3>Easy Integration</h3>
+        <p class="muted">Embed on websites or share a link — no developer required.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">📊</div>
+        <h3>Analytics</h3>
+        <p class="muted">See captured leads and common questions to improve sales.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🛠</div>
+        <h3>Founder Support</h3>
+        <p class="muted">Personal onboarding and tweaks from the founder during beta.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔒</div>
+        <h3>Data Privacy</h3>
+        <p class="muted">Conversations stored securely and never sold.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">💡</div>
+        <h3>Continuous Improvement</h3>
+        <p class="muted">We update the bot from real conversations and feedback.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section class="section">
+    <h2>Use cases</h2>
+    <div class="usecases">
+      <div class="usecase">
+        <h4>Restaurants & Cafes</h4>
+        <p class="muted">Handle menu questions, accept reservations, reduce missed calls and capture orders.</p>
+      </div>
+      <div class="usecase">
+        <h4>Local Services</h4>
+        <p class="muted">Salons, clinics and repair shops can collect leads and confirm appointments automatically.</p>
+      </div>
+      <div class="usecase">
+        <h4>E-commerce & Shops</h4>
+        <p class="muted">Answer product FAQs, share store hours and capture interested buyers.</p>
+      </div>
+      <div class="usecase">
+        <h4>Education & Coaching</h4>
+        <p class="muted">Qualify prospective students, share schedules and gather contact details for follow-up.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABS: details, pricing, faq, chatbot CTA -->
+  <section class="section">
+    <div class="tabs" role="tablist" aria-label="Assistly tabs">
+      <div class="tab-btn active" role="tab" data-tab="details">📘 Details</div>
+      <div class="tab-btn" role="tab" data-tab="pricingTab">💳 Pricing</div>
+      <div class="tab-btn" role="tab" data-tab="faqTab">❓ FAQ</div>
+      <div class="tab-btn" role="tab" data-tab="chatbotTab">🤖 Chatbot</div>
     </div>
 
+    <div class="tab-content" id="details" style="display:block">
+      <p class="muted">Assistly provides a fully managed AI receptionist during beta — we set up your chatbot, train it on your business info, and provide founder-level onboarding. The bot handles FAQs, captures leads, and hands off to humans when needed.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+        <div style="flex:1;min-width:220px;background:var(--card);padding:12px;border-radius:10px">
+          <strong>Onboarding</strong>
+          <div class="muted">Personal setup by founder</div>
+        </div>
+        <div style="flex:1;min-width:220px;background:var(--card);padding:12px;border-radius:10px">
+          <strong>Support</strong>
+          <div class="muted">WhatsApp & email during beta</div>
+        </div>
+        <div style="flex:1;min-width:220px;background:var(--card);padding:12px;border-radius:10px">
+          <strong>Customization</strong>
+          <div class="muted">Business-specific responses</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="pricingTab" style="display:none">
+      <div class="pricing-cards">
+        <div class="price-card">
+          <div class="muted">Starter (Monthly)</div>
+          <div class="price">₹999</div>
+          <div class="muted">per month — Beta special</div>
+          <ul style="color:var(--muted);margin-top:10px;line-height:1.5">
+            <li>✔ 24/7 AI Chatbot</li>
+            <li>✔ Lead capture</li>
+            <li>✔ Email support</li>
+          </ul>
+          <div style="margin-top:12px">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSffZW2Z_iM14qDRDGwjlfejXOpM2W3YrU-nEwQtEmUMXBF-DA/viewform" target="_blank"><button class="btn">Request Demo</button></a>
+          </div>
+        </div>
+
+        <div class="price-card" style="border:2px solid rgba(0,255,127,0.12)">
+          <div class="muted">Best value (Yearly)</div>
+          <div class="price">₹9,999</div>
+          <div class="muted">per year — Save ₹2,000</div>
+          <ul style="color:var(--muted);margin-top:10px;line-height:1.5">
+            <li>✔ Everything in Starter</li>
+            <li>✔ Priority onboarding</li>
+            <li>✔ Early feature access</li>
+          </ul>
+          <div style="margin-top:12px">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSffZW2Z_iM14qDRDGwjlfejXOpM2W3YrU-nEwQtEmUMXBF-DA/viewform" target="_blank"><button class="btn">Request Demo</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="faqTab" style="display:none">
+      <div class="faq">
+        <div class="faq-item"><strong>Q:</strong> Is Assistly secure?<div class="muted">A: Yes — conversations are stored securely and not sold.</div></div>
+        <div class="faq-item"><strong>Q:</strong> Do I need a developer?<div class="muted">A: No — we handle setup during beta.</div></div>
+        <div class="faq-item"><strong>Q:</strong> Can I cancel anytime?<div class="muted">A: Yes — beta is flexible.</div></div>
+        <div class="faq-item"><strong>Q:</strong> Who do I contact for support?<div class="muted">A: Email assistlyyy@gmail.com or WhatsApp during onboarding.</div></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="chatbotTab" style="display:none">
+      <p class="muted">Try AVA live — click below to open the demo chat in a new tab. You can ask product questions, test responses, and see lead capture in action.</p>
+      <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank"><button class="btn">Open Live Chat</button></a>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section">
+    <h2>What early users say</h2>
+    <div class="testimonials" id="tests">
+      <div class="test">
+        <p>"Assistly reduced our missed messages and helped us capture repeat leads — setup was fast and the founder was hands-on."</p>
+        <div class="muted" style="margin-top:10px">— Demo Restaurant</div>
+      </div>
+      <div class="test">
+        <p>"The AI gives relevant answers and the lead capture flow is clean. Great for local businesses."</p>
+        <div class="muted" style="margin-top:10px">— Beta User</div>
+      </div>
+      <div class="test">
+        <p>"Personal onboarding made it easy. We started getting better queries within days."</p>
+        <div class="muted" style="margin-top:10px">— Salon Owner</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <div class="cta-left">
+      <h3>Ready to stop missing customers?</h3>
+      <div class="muted">Start a free demo and get personal onboarding during beta.</div>
+    </div>
+    <div class="cta-right">
+      <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank"><button class="btn">Start Chatting</button></a>
+      <a href="https://forms.gle/b6D9ptVWwRB6sjLx5" target="_blank"><button class="btn-outline">Request Demo</button></a>
+    </div>
   </div>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="contact">
+      <h3>Contact</h3>
+      <p class="muted">For demos, onboarding or questions — email <a href="mailto:assistlyyy@gmail.com" style="color:var(--accent)">assistlyyy@gmail.com</a></p>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Assistly · <a href="terms.html" target="_blank">Terms</a> · <a href="privacy.html" target="_blank">Privacy</a>
+  </footer>
 </div>
-
-<!-- CHATBOT CTA TAB -->
-<div id="chatbot" class="tab-content">
-  <p>
-    Experience Assistly’s AI chatbot in real time. Ask questions, test responses,
-    and see how AVA can work for your business.
-  </p>
-  <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank">
-    <button class="btn">Start Chatting with AVA</button>
-  </a>
-</div>
-
-</section>
-
-<!-- CONTACT -->
-<section class="section container">
-  <h2>Contact</h2>
-  <p>Email us at <a href="mailto:assistlyyy@gmail.com" style="color:#00ff7f">assistlyyy@gmail.com</a></p>
-</section>
-
-<footer>
-  © <span id="year"></span> Assistly. All rights reserved.
-</footer>
 
 <script>
-const sections=document.querySelectorAll('.section');
+/* reveal on scroll */
+const sections = document.querySelectorAll('.section, .hero');
 function reveal(){
   sections.forEach(s=>{
-    if(s.getBoundingClientRect().top < window.innerHeight-100){
-      s.classList.add('show');
-    }
+    const top = s.getBoundingClientRect().top;
+    if(top < window.innerHeight - 80) s.classList.add('show');
   });
 }
-window.addEventListener('scroll',reveal);
-window.addEventListener('load',reveal);
-document.getElementById('year').textContent=new Date().getFullYear();
+window.addEventListener('scroll', reveal);
+window.addEventListener('load', reveal);
 
-function openTab(e,id){
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  e.currentTarget.classList.add('active');
+/* simple testimonials slide */
+let tIndex = 0;
+const tests = document.querySelectorAll('#tests .test');
+function rotateTests(){
+  tests.forEach((t,i)=> t.style.transform = `translateX(${(i - tIndex)*320}px)`);
 }
-</script>
+setInterval(()=>{ tIndex = (tIndex+1) % tests.length; rotateTests(); }, 4000);
+rotateTests();
 
+/* tabs */
+document.querySelectorAll('.tabs .tab-btn').forEach(btn=>{
+  btn.addEventListener('click', (e)=>{
+    document.querySelectorAll('.tabs .tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.getAttribute('data-tab') || btn.getAttribute('data-tab') ;
+    // hide all
+    document.querySelectorAll('.tab-content').forEach(tc => tc.style.display = 'none');
+    // show chosen
+    const id = btn.getAttribute('data-tab') || (btn.textContent.toLowerCase().includes('pricing')?'pricingTab':btn.textContent.toLowerCase().includes('chatbot')?'chatbotTab':btn.textContent.toLowerCase().includes('faq')?'faqTab':'details');
+    // try to use id mapping
+    const mapping = {
+      '📘 Details': 'details',
+      '💳 Pricing': 'pricingTab',
+      '❓ FAQ': 'faqTab',
+      '🤖 Chatbot': 'chatbotTab'
+    };
+    // if btn has data-tab attribute use it; else pick by position
+    const keys = Array.from(document.querySelectorAll('.tabs .tab-btn'));
+    // simpler: pick based on text (normalize)
+    const text = btn.textContent.trim().toLowerCase();
+    if(text.includes('details') || text.includes('overview')) { document.getElementById('details').style.display='block'; }
+    else if(text.includes('pricing')) { document.getElementById('pricingTab').style.display='block'; }
+    else if(text.includes('faq')) { document.getElementById('faqTab').style.display='block'; }
+    else if(text.includes('chatbot')) { document.getElementById('chatbotTab').style.display='block'; }
+  });
+});
+
+/* footer year */
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
+
 
 
 
