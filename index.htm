@@ -423,6 +423,23 @@ document.querySelectorAll('.tabs .tab-btn').forEach(btn=>{
 
 /* footer year */
 document.getElementById('year').textContent = new Date().getFullYear();
+  <!-- Footer with Legal & Payment Links -->
+<footer style="background:#111; padding:40px 20px; text-align:center; border-top:1px solid #333; color:#888;">
+  <p>
+    © <span id="year"></span> Assistly. All rights reserved.
+  </p>
+  <p style="margin-top:10px;">
+    <a href="https://docs.google.com/document/d/1PZAwNACYfzbpjp8uUJwPk2L7_b58T2Rlf1JVJOtg47k/edit?usp=sharing" target="_blank" style="color:#00ff7f; margin:0 10px;">Terms & Conditions</a> |
+    <a href="https://docs.google.com/document/d/1BLOxorXyBP8HdaiA_7Z7v8RbPv_IEpsQ5ZBM9X_x_R8/edit?usp=sharing" target="_blank" style="color:#00ff7f; margin:0 10px;">Privacy Policy</a> |
+    <a href="https://docs.google.com/document/d/1jM-MdMKNGNOfxxjIZT6k-93sOQyCiBBcn7gJMf37ej8/edit?usp=sharing" target="_blank" style="color:#00ff7f; margin:0 10px;">Payment Instructions</a>
+  </p>
+</footer>
+
+<script>
+  // Year auto-update
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 </script>
 </body>
 </html>
