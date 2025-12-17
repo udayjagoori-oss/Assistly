@@ -3,198 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assistly - AI Chatbot Assistant</title>
+<title>Assistly – AI Chatbot Assistant</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-  /* ===== Reset & Global ===== */
-  * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
-  body { background:#0f0f0f; color:#fff; scroll-behavior:smooth; }
-  a { text-decoration:none; color:inherit; }
-  img { max-width:100%; border-radius:15px; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#0f0f0f;color:#fff;scroll-behavior:smooth}
+a{text-decoration:none;color:inherit}
 
-  /* ===== Buttons ===== */
-  .btn { background-color:#00ff7f; color:black; border:none; padding:15px 35px; font-size:1rem; border-radius:30px; cursor:pointer; transition:0.3s; }
-  .btn:hover { background:#00e670; transform:scale(1.05); }
-  .btn-outline { background:transparent; border:2px solid #00ff7f; color:#00ff7f; }
+.container{max-width:1200px;margin:auto;padding:80px 20px;text-align:center}
+.section{opacity:0;transform:translateY(50px);transition:all .8s ease}
+.section.show{opacity:1;transform:translateY(0)}
 
-  /* ===== Containers ===== */
-  .container { max-width:1200px; margin:auto; padding:60px 20px; text-align:center; }
-  .section { opacity:0; transform:translateY(50px); transition:all 0.8s ease; padding:80px 0; }
-  .section.show { opacity:1; transform:translateY(0); }
+h1{font-size:3rem;color:#00ff7f}
+h2{font-size:2.3rem;color:#00ff7f;margin-bottom:20px}
+h3{margin-bottom:10px}
+p{color:#ccc;line-height:1.6;margin-bottom:20px}
 
-  h1,h2,h3 { margin-bottom:20px; }
-  h1 { font-size:3em; color:#00ff7f; }
-  h2 { font-size:2.5em; color:#00ff7f; }
-  h3 { font-size:1.5em; color:#fff; }
+.btn{background:#00ff7f;color:#000;border:none;padding:14px 34px;border-radius:30px;font-weight:600;cursor:pointer;transition:.3s}
+.btn:hover{transform:scale(1.05)}
+.btn-outline{background:transparent;border:2px solid #00ff7f;color:#00ff7f}
 
-  p { color:#ccc; margin-bottom:20px; line-height:1.6; }
+#hero{background:linear-gradient(135deg,#0f0f0f,#1b1b1b)}
 
-  /* ===== Hero ===== */
-  #hero { background: linear-gradient(135deg, #0f0f0f, #1c1c1c); }
-  #hero .hero-content { max-width:800px; margin:auto; }
+.tabs{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-bottom:40px}
+.tab-btn{
+  background:#111;border:2px solid #333;color:#ccc;
+  padding:12px 26px;border-radius:30px;cursor:pointer;
+  transition:.3s;display:flex;gap:8px;align-items:center
+}
+.tab-btn.active,.tab-btn:hover{background:#00ff7f;color:#000;border-color:#00ff7f}
 
-  /* ===== Features ===== */
-  .features { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; margin-top:40px; }
-  .feature-card { background:#111; padding:30px; border-radius:20px; flex:1 1 250px; min-width:250px; transition:0.3s; }
-  .feature-card:hover { transform:scale(1.03); }
-  .feature-icon { font-size:2em; margin-bottom:15px; color:#00ff7f; }
+.tab-content{display:none;max-width:900px;margin:auto}
+.tab-content.active{display:block;animation:fade .5s ease}
 
-  /* ===== How it works ===== */
-  .how-cards { display:flex; flex-wrap:wrap; gap:40px; justify-content:center; margin-top:40px; }
-  .how-card { background:#111; border-radius:20px; padding:25px; flex:1 1 250px; min-width:250px; transition:0.3s; }
-  .how-card:hover { transform:scale(1.03); }
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
 
-  /* ===== Pricing ===== */
-  .pricing { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; margin-top:40px; }
-  .price-card { background:#111; padding:30px; border-radius:20px; flex:1 1 250px; min-width:250px; transition:0.3s; }
-  .price-card:hover { transform:scale(1.03); }
+.pricing{display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
+.price-card{
+  background:#111;padding:30px;border-radius:20px;
+  min-width:260px;transition:.3s
+}
+.price-card:hover{transform:scale(1.04)}
 
-  /* ===== Testimonials ===== */
-  .testimonials { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; margin-top:40px; }
-  .test-card { background:#111; padding:30px; border-radius:20px; flex:1 1 250px; min-width:250px; transition:0.3s; }
-  .test-card:hover { transform:scale(1.03); }
+footer{background:#111;border-top:1px solid #333;padding:40px;color:#777}
 
-  /* ===== Footer ===== */
-  footer { background:#111; padding:40px 20px; text-align:center; border-top:1px solid #333; color:#888; }
-
-  /* ===== Responsive ===== */
-  @media(max-width:768px){
-    h1 { font-size:2.2em; }
-    h2 { font-size:2em; }
-    .features, .how-cards, .pricing, .testimonials { flex-direction:column; }
-  }
+@media(max-width:768px){
+h1{font-size:2.2rem}
+.pricing{flex-direction:column}
+}
 </style>
 </head>
+
 <body>
 
-<!-- Hero Section -->
+<!-- HERO -->
 <section id="hero" class="section">
-  <div class="container hero-content">
+  <div class="container">
     <h1>Assistly</h1>
-    <p>Your AI-powered chatbot assistant for businesses — fast, reliable, and available 24/7 to help you capture leads and improve customer support.</p>
-    <div>
-      <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank"><button class="btn">Start Chatting</button></a>
-      <a href="https://forms.gle/b6D9ptVWwRB6sjLx5" target="_blank"><button class="btn btn-outline">Request Demo</button></a>
-    </div>
+    <p>AI-powered chatbot assistant helping businesses respond instantly, capture leads, and stay available 24/7.</p>
+    <br>
+    <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank">
+      <button class="btn">Start Chatting</button>
+    </a>
+    <a href="https://forms.gle/b6D9ptVWwRB6sjLx5" target="_blank">
+      <button class="btn btn-outline">Request Demo</button>
+    </a>
   </div>
 </section>
 
-<!-- Features Section -->
-<section id="features" class="section container">
-  <h2>Key Features</h2>
-  <div class="features">
-    <div class="feature-card"><div class="feature-icon">&#128222;</div><h3>24/7 Instant Replies</h3><p>Respond to your customers instantly without missing any inquiry.</p></div>
-    <div class="feature-card"><div class="feature-icon">&#128176;</div><h3>Automatic Lead Capture</h3><p>Collect leads automatically and follow up efficiently.</p></div>
-    <div class="feature-card"><div class="feature-icon">&#128172;</div><h3>Personalized Responses</h3><p>Answers are tailored to your business and your customers.</p></div>
-    <div class="feature-card"><div class="feature-icon">&#128640;</div><h3>Easy Integration</h3><p>Works seamlessly on websites, apps, and messaging platforms.</p></div>
-  </div>
-</section>
+<!-- TABS -->
+<section class="section container">
 
-<!-- How it Works Section -->
-<section id="how" class="section container">
-  <h2>How Assistly Works</h2>
-  <div class="how-cards">
-    <div class="how-card"><h3>Step 1</h3><p>Request a demo or start chatting to provide your business information directly — no signup required..</p></div>
-    <div class="how-card"><h3>Step 2</h3><p>Integrate the chatbot on your website or messaging platform.</p></div>
-    <div class="how-card"><h3>Step 3</h3><p>Assistly automatically responds to customer inquiries 24/7 and captures leads.</p></div>
-  </div>
-</section>
+<h2>Explore Assistly</h2>
 
-<!-- Pricing Section -->
-<section id="pricing" class="section container">
-  <h2>Beta Special Pricing</h2>
-  <p style="max-width:700px; margin:0 auto 40px; color:#aaa;">
-    Assistly is currently in beta. Early users get exclusive discounted pricing and priority support.
+<div class="tabs">
+  <button class="tab-btn active" onclick="openTab(event,'overview')">⚡ Overview</button>
+  <button class="tab-btn" onclick="openTab(event,'features')">✨ Features</button>
+  <button class="tab-btn" onclick="openTab(event,'pricing')">💰 Pricing</button>
+  <button class="tab-btn" onclick="openTab(event,'chatbot')">🤖 Chatbot</button>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" class="tab-content active">
+  <p>
+    Assistly is an AI receptionist designed for modern businesses. It replies instantly,
+    captures leads automatically, and answers customer questions using business-specific information.
   </p>
+</div>
 
+<!-- FEATURES -->
+<div id="features" class="tab-content">
+  <p>
+    ✔ 24/7 instant replies<br>
+    ✔ Lead capture automation<br>
+    ✔ Business-trained AI (AVA)<br>
+    ✔ Easy website & WhatsApp integration<br>
+    ✔ No technical setup required
+  </p>
+</div>
+
+<!-- PRICING INSIDE TAB -->
+<div id="pricing" class="tab-content">
   <div class="pricing">
 
-    <!-- Monthly Plan -->
     <div class="price-card">
-      <h3>Monthly Plan</h3>
-      <p style="font-size:2rem; color:#00ff7f; font-weight:700;">₹999</p>
+      <h3>Monthly</h3>
+      <p style="font-size:2rem;color:#00ff7f">₹999</p>
       <p>per month</p>
-      <ul style="list-style:none; padding:0; margin:20px 0; color:#ccc; line-height:1.8;">
-        <li>✔ 24/7 AI Chatbot (AVA)</li>
-        <li>✔ Instant Customer Replies</li>
-        <li>✔ Automatic Lead Capture</li>
-        <li>✔ Business-specific Training</li>
-        <li>✔ Beta Priority Support</li>
-      </ul>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSffZW2Z_iM14qDRDGwjlfejXOpM2W3YrU-nEwQtEmUMXBF-DA/viewform" target="_blank">
+      <br>
+      <a href="https://forms.gle/b6D9ptVWwRB6sjLx5" target="_blank">
         <button class="btn">Request Demo</button>
       </a>
     </div>
 
-    <!-- Yearly Plan -->
-    <div class="price-card" style="border:2px solid #00ff7f;">
-      <h3>Yearly Plan ⭐</h3>
-      <p style="font-size:2rem; color:#00ff7f; font-weight:700;">₹9,999</p>
-      <p>per year <span style="color:#00ff7f;">(Save ₹2,000)</span></p>
-      <ul style="list-style:none; padding:0; margin:20px 0; color:#ccc; line-height:1.8;">
-        <li>✔ Everything in Monthly Plan</li>
-        <li>✔ Priority Onboarding</li>
-        <li>✔ Faster Updates & Improvements</li>
-        <li>✔ Early Feature Access</li>
-        <li>✔ Founder-level Support</li>
-      </ul>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSffZW2Z_iM14qDRDGwjlfejXOpM2W3YrU-nEwQtEmUMXBF-DA/viewform" target="_blank">
+    <div class="price-card" style="border:2px solid #00ff7f">
+      <h3>Yearly ⭐</h3>
+      <p style="font-size:2rem;color:#00ff7f">₹9,999</p>
+      <p>Save ₹2,000</p>
+      <br>
+      <a href="https://forms.gle/b6D9ptVWwRB6sjLx5" target="_blank">
         <button class="btn">Request Demo</button>
       </a>
     </div>
 
   </div>
+</div>
 
-  <p style="margin-top:30px; font-size:0.9rem; color:#777;">
-    Beta pricing is limited-time and may increase after public launch.
-  </p>
-</section>
-
-
-<!-- Testimonials Section -->
-<section id="testimonials" class="section container">
-  <h2>What Our Users Say</h2>
-  <div class="testimonials">
-    <div class="test-card"><p>"Assistly has transformed our customer support. Instant replies and automatic lead capture save us hours!"</p><h3>- Demo Company</h3></div>
-    <div class="test-card"><p>"The AI responses are accurate and personalized. Our customers love it!"</p><h3>- Beta User</h3></div>
-  </div>
-</section>
-  <!-- Contact Section -->
-<section id="contact" class="section container">
-  <h2>Contact Us</h2>
+<!-- CHATBOT CTA TAB -->
+<div id="chatbot" class="tab-content">
   <p>
-    Have questions or want to get in touch?
-    <br><br>
-    Reach us at
-    <strong>
-      <a href="mailto:assistlyyy@gmail.com" style="color:#00ff7f;">
-        assistlyyy@gmail.com
-      </a>
-    </strong>
+    Experience Assistly’s AI chatbot in real time. Ask questions, test responses,
+    and see how AVA can work for your business.
   </p>
+  <a href="https://agent.jotform.com/019b26f1b46f71a9b28220ca7d78b345be61" target="_blank">
+    <button class="btn">Start Chatting with AVA</button>
+  </a>
+</div>
+
 </section>
 
+<!-- CONTACT -->
+<section class="section container">
+  <h2>Contact</h2>
+  <p>Email us at <a href="mailto:assistlyyy@gmail.com" style="color:#00ff7f">assistlyyy@gmail.com</a></p>
+</section>
 
-<!-- Footer -->
 <footer>
   © <span id="year"></span> Assistly. All rights reserved.
 </footer>
 
-<!-- JS for animations and year -->
 <script>
-  const sections = document.querySelectorAll('.section');
-  function animateScroll(){ 
-    const trigger = window.innerHeight - 100;
-    sections.forEach(sec => { if(sec.getBoundingClientRect().top < trigger) sec.classList.add('show'); });
-  }
-  window.addEventListener('scroll', animateScroll);
-  window.addEventListener('load', animateScroll);
+const sections=document.querySelectorAll('.section');
+function reveal(){
+  sections.forEach(s=>{
+    if(s.getBoundingClientRect().top < window.innerHeight-100){
+      s.classList.add('show');
+    }
+  });
+}
+window.addEventListener('scroll',reveal);
+window.addEventListener('load',reveal);
+document.getElementById('year').textContent=new Date().getFullYear();
 
-  document.getElementById('year').textContent = new Date().getFullYear();
+function openTab(e,id){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
 </script>
 
 </body>
 </html>
+
 
 
 
